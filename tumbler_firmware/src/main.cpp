@@ -1,89 +1,95 @@
 
 #include <Arduino.h>
+#include <AccelStepper.h>
+#include <Metro.h>
 
-#define DIR 55
-#define STEP 54
-#define ENABLE 38
+#define STEP_PIN 2 //D2
+#define DIR_PIN 3 //D3
+#define ENABLE_PIN 4 //D4
+#define DEBUG_LED 13 
 
-double desired_rpm = 8;
-const int FULL_ROTATION = 200;
-const int STEP_MODE = 16;
-const double HIGH_TIME = 10; // microseconds
-const double SEC_TO_US = 1000000; //second to microsecond
+#define POT_PIN A0 
+
+AccelStepper stepper(AccelStepper::DRIVER,STEP_PIN,DIR_PIN); //DRIVER means your using a stepper driver
+double max_rps=0.2; //12rpm/60
+double max_rpss=25;
+double dead_zone=10; //rps
+double steps_per_rev=3200; //200*microsteps
+
+Metro pot_check=Metro(100); //milliseconds 0.1 sec
+
+double max_vel;
+double max_accel;
+double vel=0;
+
+int pot_dead_zone=2;
+int pot=0;
+int prev_pot=0;
 
 
-
-
-
-
-double low_time=0;
 
 
 void setup(){
 
+  // serial communication
   Serial.begin(9600);
 
-  delay(1);
+  pinMode(DEBUG_LED, OUTPUT);
 
-  // define pins
-  pinMode(DIR, OUTPUT);
-  pinMode(STEP, OUTPUT);
-  pinMode(ENABLE, OUTPUT);
+  //convert rps to steps/s
+  max_vel=max_rps*steps_per_rev;
+  max_accel=max_rpss*steps_per_rev;
 
-  // enable stepper
-  digitalWrite(ENABLE, LOW); // low activates driver
+  stepper.setMaxSpeed(max_vel); //steps per second
 
-  // set direction
-  digitalWrite(DIR, HIGH);
+  stepper.setAcceleration(max_accel); //steps per sec^2
 
-  ////////////////////
-  // calcate delays //
-  ////////////////////
+  stepper.setPinsInverted(false, false, true); //dir, step, enable
 
-  // calculate steps per rotation
-  int steps_per_rotation=FULL_ROTATION*STEP_MODE;
-  Serial.println("steps_per_rotation");  
-  Serial.println(steps_per_rotation); 
+  stepper.setEnablePin(ENABLE_PIN); // GRD=ON VIO=OFF
 
-  // RPS
-  double seconds_per_rotation=60/desired_rpm;
-  Serial.println("seconds_per_rotation");  
-  Serial.println(seconds_per_rotation); 
+  stepper.enableOutputs(); // setspin modes as outputs
 
-// total seconds_per_rotations=seconds_per_step*steps_per_rotation;
-
-
-  // how long should a step take in seconds
-  double seconds_per_step=seconds_per_rotation/steps_per_rotation;
-  Serial.println("seconds_per_step");  
-  Serial.println(seconds_per_step);
-
-  // required low time
-  low_time=seconds_per_step*1000;
-  Serial.println("low_time");  
-  Serial.println(low_time);
-
- 
-
+  for(uint8_t i=0; i<6; i++){
+    digitalWrite(DEBUG_LED, HIGH);
+    delay(100);
+    digitalWrite(DEBUG_LED, LOW);
+    delay(100);
+  }
+  Serial.println("Setup complete");
 }
 
 
 
-// main cod
+
+
 void loop(){
 
-  ////////////////////////
-  // blocking step code //
-  ////////////////////////
+  if(pot_check.check()){
+
+    //read pot input
+    pot = analogRead(POT_PIN);
+
+    if(pot < prev_pot-pot_dead_zone || pot > prev_pot+pot_dead_zone ){
+
+      prev_pot=pot;
+
+      //map pot to speed
+      vel = map(pot, 0, 1023, -max_vel, max_vel);
+
+      //if near zero
+      if(abs(vel)<dead_zone){vel=0;}
+
+      //dir based on vel sign
+      stepper.setSpeed(vel);
+
+      Serial.println(vel);
+
+      } 
 
 
-    digitalWrite(STEP, HIGH);
-    delayMicroseconds(HIGH_TIME); // stepper driver expects a rising edge of 10 microseconds
+    }//if pot read timer
 
-
-
-    digitalWrite(STEP, LOW);
-    delay(low_time);
-
+  stepper.runSpeed(); //call as often as possible. This steps when needed for speed control
 
 }

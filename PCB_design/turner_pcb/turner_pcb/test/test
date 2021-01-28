@@ -1,0 +1,4 @@
+Reference, Value, Footprint, Datasheet
+"R1","R","Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P1.90mm_Vertical","~"
+"R2","R","Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal","~"
+"U1","IR4301","Package_DFN_QFN:Infineon_PQFN-22-15-4EP_6x5mm_P0.65mm","https://www.infineon.com/dgdl/ir4301.pdf?fileId=5546d462533600a4015355d5fc691819"

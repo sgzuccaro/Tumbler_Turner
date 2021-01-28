@@ -1,0 +1,91 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:R R1
+U 1 1 6000E7A8
+P 5000 2700
+F 0 "R1" H 5070 2746 50  0000 L CNN
+F 1 "R" H 5070 2655 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P1.90mm_Vertical" V 4930 2700 50  0001 C CNN
+F 3 "~" H 5000 2700 50  0001 C CNN
+	1    5000 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 6000EC78
+P 5450 2700
+F 0 "R2" H 5520 2746 50  0000 L CNN
+F 1 "R" H 5520 2655 50  0000 L CNN
+F 2 "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal" V 5380 2700 50  0001 C CNN
+F 3 "~" H 5450 2700 50  0001 C CNN
+	1    5450 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Amplifier_Audio:IR4301 U1
+U 1 1 6000ED0E
+P 4050 2550
+F 0 "U1" H 4050 3531 50  0000 C CNN
+F 1 "IR4301" H 4050 3440 50  0000 C CNN
+F 2 "Package_DFN_QFN:Infineon_PQFN-22-15-4EP_6x5mm_P0.65mm" H 4050 2550 50  0001 C CIN
+F 3 "https://www.infineon.com/dgdl/ir4301.pdf?fileId=5546d462533600a4015355d5fc691819" H 4050 2550 50  0001 C CNN
+	1    4050 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR02
+U 1 1 6000F4AF
+P 4550 2850
+F 0 "#PWR02" H 4550 2700 50  0001 C CNN
+F 1 "+5V" H 4565 3023 50  0000 C CNN
+F 2 "" H 4550 2850 50  0001 C CNN
+F 3 "" H 4550 2850 50  0001 C CNN
+	1    4550 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR01
+U 1 1 6000F988
+P 3500 2550
+F 0 "#PWR01" H 3500 2300 50  0001 C CNN
+F 1 "GND" H 3505 2377 50  0000 C CNN
+F 2 "" H 3500 2550 50  0001 C CNN
+F 3 "" H 3500 2550 50  0001 C CNN
+	1    3500 2550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3500 2550 3650 2550
+Wire Wire Line
+	4550 2850 4450 2850
+Wire Wire Line
+	5000 3250 4250 3250
+Connection ~ 5000 2950
+Wire Wire Line
+	5450 2950 5450 2850
+Wire Wire Line
+	5000 2850 5000 2950
+Wire Wire Line
+	5450 2950 5000 2950
+Wire Wire Line
+	5000 2950 5000 3250
+Wire Wire Line
+	5450 2550 5000 2550
+Wire Wire Line
+	5000 2550 4450 2550
+Connection ~ 5000 2550
+$EndSCHEMATC
