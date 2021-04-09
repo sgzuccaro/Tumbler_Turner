@@ -124,29 +124,16 @@ F 3 "" H 8550 3850 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C_Small C1
-U 1 1 606D78AE
-P 8750 3450
-F 0 "C1" V 8521 3450 50  0000 C CNN
-F 1 "C_Small" V 8612 3450 50  0000 C CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric" H 8750 3450 50  0001 C CNN
-F 3 "~" H 8750 3450 50  0001 C CNN
-	1    8750 3450
-	-1   0    0    1   
-$EndComp
-$Comp
 L Device:C_Polarized C2
 U 1 1 606D935B
 P 8300 3450
 F 0 "C2" V 8555 3450 50  0000 C CNN
 F 1 "C_Polarized" V 8464 3450 50  0000 C CNN
-F 2 "Capacitor_THT:CP_Radial_D8.0mm_P5.00mm" H 8338 3300 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Radial_D8.0mm_P3.80mm" H 8338 3300 50  0001 C CNN
 F 3 "~" H 8300 3450 50  0001 C CNN
 	1    8300 3450
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	8750 3350 8750 2850
 Wire Wire Line
 	8300 3300 8300 2850
 Wire Wire Line
@@ -154,11 +141,6 @@ Wire Wire Line
 Connection ~ 8400 2850
 Wire Wire Line
 	8300 3600 8300 3850
-Wire Wire Line
-	8750 3550 8750 3850
-Wire Wire Line
-	8750 3850 8550 3850
-Connection ~ 8550 3850
 $Comp
 L Connector_Generic:Conn_01x02 input_power1
 U 1 1 606DD661
@@ -442,4 +424,22 @@ Wire Wire Line
 	4400 2450 4600 2450
 Wire Wire Line
 	4600 2550 4400 2550
+$Comp
+L Device:C C3
+U 1 1 606FAE10
+P 8750 3450
+F 0 "C3" H 8865 3496 50  0000 L CNN
+F 1 "C" H 8865 3405 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" H 8788 3300 50  0001 C CNN
+F 3 "~" H 8750 3450 50  0001 C CNN
+	1    8750 3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8750 2850 8750 3300
+Wire Wire Line
+	8750 3600 8750 3850
+Wire Wire Line
+	8750 3850 8550 3850
+Connection ~ 8550 3850
 $EndSCHEMATC
